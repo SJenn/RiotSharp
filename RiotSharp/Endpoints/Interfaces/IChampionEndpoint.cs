@@ -32,5 +32,6 @@ namespace RiotSharp.Endpoints.Interfaces
         /// <param name="region">Region in which you wish to look for champion rotation.</param>
         /// <returns>An object containing id's of champions in rotation as well as max new player level.</returns>
         Task<ChampionRotation> GetChampionRotationAsync(Region region);
+        ChampionRotation GetChampionRotationMock(Region summoner1And2Region);
     }
 }

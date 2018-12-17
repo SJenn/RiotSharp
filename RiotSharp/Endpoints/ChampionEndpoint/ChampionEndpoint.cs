@@ -52,5 +52,12 @@ namespace RiotSharp.Endpoints.ChampionEndpoint
                 ).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<ChampionRotation>(json);
         }
+
+        /// <inheritdoc />
+        public ChampionRotation GetChampionRotationMock(Region region)
+        {
+            var json = "{\"freeChampionIds\": [13,34,35,44,51,60,68,80,84,99,126,150,161,202],\"freeChampionIdsForNewPlayers\": [18,81,92,141,37,238,19,45,25,64],\"maxNewPlayerLevel\": 10}";
+            return JsonConvert.DeserializeObject<ChampionRotation>(json);
+        }
     }
 }

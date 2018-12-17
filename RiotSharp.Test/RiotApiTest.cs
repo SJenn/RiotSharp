@@ -110,6 +110,18 @@ namespace RiotSharp.Test
                 Assert.IsTrue(championRotation.MaxNewPlayerLevel > 0);
             });
         }
+
+        
+        [TestMethod]
+        [TestCategory("RiotApi")]
+        public void GetChampionRotationMock_Test()
+        {
+            var championRotation = Api.Champion.GetChampionRotationMock(Summoner1And2Region);
+
+            Assert.IsTrue(championRotation.FreeChampionIds.Count() == 14);
+            Assert.IsTrue(championRotation.FreeChampionIdsForNewPlayers.Count() == 10);
+            Assert.IsTrue(championRotation.MaxNewPlayerLevel > 0);
+        }
         #endregion
 
         #region League Tests
