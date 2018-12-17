@@ -111,7 +111,23 @@ namespace RiotSharp.Test
             });
         }
 
-        
+        [TestMethod]
+        [TestCategory("RiotApi"), TestCategory("Async")]
+        public void GetChampionRotationAsyncCaching_Test()
+        {
+            EnsureCredibility(() =>
+            {
+                for(int i = 0; i < 5; i++) { 
+                    var championRotation = Api.Champion.GetChampionRotationAsync(Summoner1And2Region).Result;
+
+                    Assert.IsTrue(championRotation.FreeChampionIds.Count() == 14);
+                    Assert.IsTrue(championRotation.FreeChampionIdsForNewPlayers.Count() == 10);
+                    Assert.IsTrue(championRotation.MaxNewPlayerLevel > 0);
+                }
+            });
+        }
+
+
         [TestMethod]
         [TestCategory("RiotApi")]
         public void GetChampionRotationMock_Test()

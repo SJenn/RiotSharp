@@ -17,6 +17,7 @@ namespace RiotSharp.Endpoints.ChampionEndpoint
         private const string ChampionsUrl = "/champions";
         private const string ChampionRotationUrl = "/champion-rotations";
         private const string IdUrl = "/{0}";
+        private Dictionary<Region, ChampionRotation> rotationCache = new Dictionary<Region, ChampionRotation>();
 
         private readonly IRateLimitedRequester _requester;
 
@@ -48,9 +49,19 @@ namespace RiotSharp.Endpoints.ChampionEndpoint
         /// <inheritdoc />
         public async Task<ChampionRotation> GetChampionRotationAsync(Region region)
         {
-            var json = await _requester.CreateGetRequestAsync(PlatformRootUrl + ChampionRotationUrl, region
-                ).ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<ChampionRotation>(json);
+            if (!rotationCache.ContainsKey(region))
+            {
+                var json = await _requester.CreateGetRequestAsync(PlatformRootUrl + ChampionRotationUrl, region
+                    ).ConfigureAwait(false);
+                var val = JsonConvert.DeserializeObject<ChampionRotation>(json);
+                rotationCache.Add(region, val);
+                return val;
+            }
+            else {
+                ChampionRotation val;
+                rotationCache.TryGetValue(region, out val);
+                return val;
+            }
         }
 
         /// <inheritdoc />
